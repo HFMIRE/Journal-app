@@ -4,6 +4,8 @@
   "description": "Document API's   CRUD API   LOGIN API",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +28,6 @@
     "nodemon": "^2.0.12",
     "sequelize": "^6.6.5",
     "sqlite3": "^5.0.2"
-  }
+  },
+  "devDependencies": {}
 }
