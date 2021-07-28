@@ -1,6 +1,12 @@
 .App {
   text-align: center;
 }
+html {
+ height: 100%;
+}
+.makeStyles-root-1 {
+  height: 700px; 
+}
 
 .App-logo {
   height: 40vmin;

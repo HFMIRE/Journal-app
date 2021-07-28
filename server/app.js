@@ -20,7 +20,6 @@ app.post("/users", async (req, res) => {
   await User.create({ username, passwordHash });
   res.sendStatus(201);
 });
-
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userRecord = await User.findOne({ where: { username } });
@@ -32,18 +31,6 @@ app.post("/login", async (req, res) => {
     res.sendStatus(404);
   }
 });
-// app.post("/login", (req, res) => {
-//   const { username, password } = req.body;
-//   res.send(username, password);
-// });
-// // verify the JWT
-// app.get("/login", (req, res) => {
-//   const authHeader = req.headers.authorization;
-//   const token = authHeader.split(" ")[1];
-//   const tokenVerify = jwt.verify(token, process.env.JWT_SECRET);
-//   const { username } = tokenVerify;
-//   res.send(`Hello, ${username}`);
-// });
 
 app.get("/users/:userid", async (req, res) => {
   const userId = req.params.userid;
@@ -63,11 +50,19 @@ app.delete("/users/:userid", async (req, res) => {
 });
 // entries
 app.post("/users/:userid/entries", async (req, res) => {
-  const UserId = req.params.userid;
-  const { name, description } = req.body;
-  console.log(name, description);
-  await Entries.create({ name, description, UserId });
-  res.sendStatus(201);
+  const authHeader = req.headers.authorization;
+  const token = authHeader.split(" ")[1];
+  const tokenVerify = jwt.verify(token, process.env.JWT_SECRET);
+  const { username } = tokenVerify;
+  if (username) {
+    const UserId = req.params.userid;
+    const { name, description } = req.body;
+    console.log(name, description);
+    await Entries.create({ name, description, UserId });
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.get("/users/:userid/entries/:entriesid", async (req, res) => {
