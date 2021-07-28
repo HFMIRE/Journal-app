@@ -26,7 +26,11 @@ Entries.init(
   },
   { sequelize, modelName: "Entries" }
 );
-User.hasMany(Entries, { as: "entries", foreignKey: "UserId" });
+User.hasMany(Entries, {
+  as: "entries",
+  foreignKey: "UserId",
+  onDelete: "cascade",
+});
 Entries.belongsTo(User, { foreignKey: "UserId" });
 sequelize.sync();
-module.exports = { sequelize, User };
+module.exports = { sequelize, User, Entries };
