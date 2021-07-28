@@ -1,13 +1,13 @@
 const express = require("express");
 const { User, Entries } = require("./db");
 const bcyrpt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = 5000;
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 app.get("/", (req, res) => {
   return res.send("hello");
@@ -26,15 +26,24 @@ app.post("/login", async (req, res) => {
   const userRecord = await User.findOne({ where: { username } });
   const verfiyUser = await bcyrpt.compare(password, userRecord.passwordHash);
   if (verfiyUser) {
-    const token = jwt.sign(
-      { username, email, password },
-      process.env.JWT_SECRET
-    );
+    const token = jwt.sign({ username, password }, process.env.JWT_SECRET);
     return res.send(token);
   } else {
     res.sendStatus(404);
   }
 });
+// app.post("/login", (req, res) => {
+//   const { username, password } = req.body;
+//   res.send(username, password);
+// });
+// // verify the JWT
+// app.get("/login", (req, res) => {
+//   const authHeader = req.headers.authorization;
+//   const token = authHeader.split(" ")[1];
+//   const tokenVerify = jwt.verify(token, process.env.JWT_SECRET);
+//   const { username } = tokenVerify;
+//   res.send(`Hello, ${username}`);
+// });
 
 app.get("/users/:userid", async (req, res) => {
   const userId = req.params.userid;
