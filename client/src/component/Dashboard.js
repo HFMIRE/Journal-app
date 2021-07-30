@@ -1,72 +1,65 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '25ch',
-      },
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+}));
 const Dashboard = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState('Controlled');
-  
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  // const [name, setName] = useState();
 
   return (
-      <div> 
-          <div>
-          <TextField
-          id="outlined-multiline-flexible"
-          label="Multiline"
-          multiline
-          maxRows={4}
-          value={value}
-          onChange={handleChange}
-          variant="outlined"
+    <Paper component="form" className={classes.root}>
+      <form className={classes.root} noValidate autoComplete="off">
+        <IconButton className={classes.iconButton} aria-label="delete">
+          <DeleteIcon />
+        </IconButton>
+        <IconButton className={classes.iconButton} aria-label="edit">
+          <EditIcon />
+        </IconButton>
+        <IconButton className={classes.iconButton} aria-label="add">
+          <AddIcon />
+        </IconButton>
+        <Divider className={classes.divider} orientation="vertical" />
+        <InputBase
+          className={classes.input}
+          placeholder="Search Google Maps"
+          inputProps={{ "aria-label": "search google maps" }}
         />
-
-          </div>
-          <div className={classes.root}>
-            <Grid container spacing={3}>
-              <Grid item xl={12}>
-                <Paper className={classes.paper}>xs=12</Paper>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Paper className={classes.paper}>xs=12 sm=6</Paper>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Paper className={classes.paper}>xs=12 sm=6</Paper>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Paper className={classes.paper}>xs=6 sm=3</Paper>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Paper className={classes.paper}>xs=6 sm=3</Paper>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Paper className={classes.paper}>xs=6 sm=3</Paper>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Paper className={classes.paper}>xs=6 sm=3</Paper>
-              </Grid>
-            </Grid>
-          </div>
-      </div>
+        <IconButton
+          type="submit"
+          className={classes.iconButton}
+          aria-label="search"
+        >
+          <SearchIcon />
+        </IconButton>
+      </form>
+    </Paper>
   );
-}
+};
 
-export default Dashboard
+export default Dashboard;

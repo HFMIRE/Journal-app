@@ -1,35 +1,41 @@
 import React, { useState } from "react";
+import UserDetailForm from "./UserDetailForm";
+import { ReactComponent as Messy } from "../svg/Messy.svg";
+import { ReactComponent as Go } from "../svg/Go.svg";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const requestOption = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    };
+    const response = await fetch("/users", requestOption);
+    if (!response.ok) {
+      response.sendStatus(403);
+    }
+  }
   return (
     <div>
-      <form>
-        <h1>Signup</h1>
-        <label htmlFor="username">
-          Name:
-          <input
-            id="username"
-            value={username}
-            placeholder="Name"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            id="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <Link to={"/login"}>
-          <button>Register</button>
-        </Link>
-      </form>
+      <UserDetailForm
+        title="Signup"
+        handleSubmit={handleSubmit}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      />
+      <Link to={"/login"}>
+        <h4>Lets login </h4>
+        <Go />
+      </Link>
+      <Messy />
     </div>
   );
 };
