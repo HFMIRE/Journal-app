@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import UserDetailForm from "./UserDetailForm";
-import { ReactComponent as Zombieing } from "../svg/Zombieing.svg";
-import { ReactComponent as Go } from "../svg/Go.svg";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,17 +11,17 @@ const Login = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          //" Authorization": "Bearer" + localStorage.getItem("jwt"),
         },
         body: JSON.stringify({ username, password }),
       };
       const response = await fetch("/login", requestOption);
       if (response.ok) {
-        response.sendStatus(201);
-        // const jwt = await response.text();
-        // localStorage.setItem("jwt", jwt);
+        const { token, userid } = await response.json();
+        console.log(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("userid", userid);
       } else {
-        response.sendStatus(403);
+        console.log("err");
       }
     } catch (err) {
       console.log(err);
@@ -39,12 +36,8 @@ const Login = () => {
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
+        goto="/dashboard"
       />
-      <Link to={"/dashboard"}>
-        <h4>Let's go to the Dashboard </h4>
-        <Go />
-      </Link>
-      <Zombieing />
     </div>
   );
 };

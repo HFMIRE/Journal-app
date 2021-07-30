@@ -12,7 +12,6 @@ app.use(cors());
 
 app.post("/users", async (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body);
   const passwordHash = await bcyrpt.hash(password, 10);
   await User.create({ username, passwordHash });
   res.sendStatus(201);
@@ -22,10 +21,11 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userRecord = await User.findOne({ where: { username } });
   const verfiyUser = await bcyrpt.compare(password, userRecord.passwordHash);
+  console.log(userRecord.id);
   res.status(200);
   if (verfiyUser) {
     const token = jwt.sign({ userid: userRecord.id }, process.env.JWT_SECRET);
-    return res.send(token);
+    return res.json({ token, userid: userRecord.id });
   } else {
     res.sendStatus(404);
   }
