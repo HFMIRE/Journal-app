@@ -1,55 +1,77 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
-const useStyles = makeStyles({
+import React, { useState } from "react";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
-
+}));
 
 const Entry = () => {
-    const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-    return (
-     <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+      const requestOption = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name, description }),
+      };
+      const userid = localStorage.getItem("userid");
+      await fetch(`/users/${userid}/entries`, requestOption);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const classes = useStyles();
+  return (
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+      >
+        <h1>Add new entry</h1>
+        <Typography variant="h6" component="h6">
+          Your name is
         </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+        <TextField
+          id="standard-name-input"
+          label="name"
+          type="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoComplete="current-name"
+        />
+        <Typography variant="h6" component="h6">
+          and
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
+        <Typography variant="h6" component="h6">
+          your description is
         </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+        <TextField
+          htmlFor="description"
+          id="standard-description-input"
+          label="description"
+          type="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          autoComplete="current-description"
+        />
+        <button>Register</button>
+      </form>
+    </div>
   );
-}
-    
-export default Entry
+};
+
+export default Entry;

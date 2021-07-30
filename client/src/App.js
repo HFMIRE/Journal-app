@@ -1,11 +1,9 @@
 import "./App.css";
-// import UserDetailForm from "./UserDetailForm"
 import Navigation from "./component/Navigation";
-import Signup from "./component/Signup";
-import Login from "./component/Login";
-import Dashoard from "./component/Dashboard";
-import Entry from "./component/Entry";
-import Home from "./component/Home";
+import Signup from "./auth/Signup";
+import Login from "./auth/Login";
+import GetAllEntries from "./components/GetAllEntries";
+import AddEntry from "./components/Entry";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -13,13 +11,11 @@ function App() {
     <div className="App">
       <Router>
         <Navigation />
-        {/* <UserDetailForm /> */}
         <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/getallentries" component={GetAllEntries} />
+          <Route path="/addentry" component={AddEntry} />
           <Route path="/login" component={Login} />
-          <Route path="/dashoard" component={Dashoard} />
-          <Route path="/entry" component={Entry} />
+          <Route path="/" component={Signup} />
         </Switch>
       </Router>
     </div>
