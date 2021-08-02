@@ -9,13 +9,10 @@ const Navigation = () => {
         <Logo />
       </Link>
       <div className="navbar-left">
-        <Link to={"/signup"}>
-          <h2>Signup</h2>
-        </Link>
         <Link to={"/login"}>
           <h2>Login</h2>
         </Link>
-        <Link to={"/"}>
+        <Link to={"/security"}>
           <h2>Security</h2>
         </Link>
       </div>

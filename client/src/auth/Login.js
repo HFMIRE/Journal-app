@@ -36,7 +36,7 @@ const Login = () => {
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        goto="/dashboard"
+        goto="/getallentries"
       />
     </div>
   );
