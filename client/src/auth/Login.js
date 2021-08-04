@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import UserDetailForm from "./UserDetailForm";
-
+import { ReactComponent as Zombieing } from "../svg/Zombieing.svg";
+import { ReactComponent as Go } from "../svg/Go.svg";
+import { Link } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,14 +19,13 @@ const Login = () => {
       const response = await fetch("/login", requestOption);
       if (response.ok) {
         const { token, userid } = await response.json();
-        console.log(token);
         localStorage.setItem("token", token);
+        console.log(token);
         localStorage.setItem("userid", userid);
-      } else {
-        console.log("err");
+        console.log(userid);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err + "is a error");
     }
   }
   return (
@@ -38,6 +39,10 @@ const Login = () => {
         setPassword={setPassword}
         goto="/getallentries"
       />
+      <Link to={"/addentry"}>
+        <Go />
+      </Link>
+      <Zombieing />
     </div>
   );
 };

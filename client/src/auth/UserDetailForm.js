@@ -2,8 +2,6 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { ReactComponent as Go } from "../svg/Go.svg";
-import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -20,7 +18,6 @@ const UserDetailForm = ({
   setPassword,
   username,
   setUsername,
-  goto,
 }) => {
   const classes = useStyles();
   return (
@@ -58,9 +55,7 @@ const UserDetailForm = ({
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
         />
-        <Link to={{ goto }}>
-          <Go />
-        </Link>
+        <button type="submit"> Submit</button>
       </form>
     </div>
   );

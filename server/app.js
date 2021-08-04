@@ -2,7 +2,7 @@ const express = require("express");
 const { User, Entries } = require("./db");
 const bcyrpt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { authenticate } = require("./auth");
+const { verifyToken } = require("./auth");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -24,12 +24,15 @@ app.post("/login", async (req, res) => {
   console.log(userRecord.id);
   res.status(200);
   if (verfiyUser) {
-    const token = jwt.sign({ userid: userRecord.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userid: userRecord.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
     return res.json({ token, userid: userRecord.id });
   } else {
     res.sendStatus(404);
   }
 });
+
 app.get("/users/:userid", async (req, res) => {
   const userId = req.params.userid;
   const findByUserId = await User.findByPk(userId);
@@ -48,27 +51,27 @@ app.delete("/users/:userid", async (req, res) => {
 });
 // entries
 // Jwt token should taken user Id not username
-app.post("/users/:userid/entries", authenticate, async (req, res) => {
+app.post("/users/:userid/entries", verifyToken, async (req, res) => {
   const UserId = req.params.userid;
   const { name, description } = req.body;
-  console.log(name, description);
   await Entries.create({ name, description, UserId });
   res.sendStatus(201);
 });
 
 //get all entry by user
-app.get("/users/:userid/entries", authenticate, async (req, res) => {
-  const userId = req.params.userid;
-  const findByUserId = await Entries.findAll({ where: { userId } });
-  res.send(findByUserId);
+app.get("/users/:userid/entries", verifyToken, async (req, res) => {
+  const UserId = req.params.userid;
+  const findByUserId = await Entries.findAll({ where: { UserId: UserId } });
+  res.json(findByUserId);
 });
 
-app.get("/users/:userid/entries/:entriesid", authenticate, async (req, res) => {
+app.get("/users/:userid/entries/:entriesid", verifyToken, async (req, res) => {
   const EntriesId = req.params.entriesid;
   const findByEntriesId = await Entries.findByPk(EntriesId);
   res.send(findByEntriesId);
 });
-app.put("/users/:userid/entries/:entriesid", authenticate, async (req, res) => {
+
+app.put("/users/:userid/entries/:entriesid", verifyToken, async (req, res) => {
   const { name, description } = req.body;
   const EntriesId = req.params.entriesid;
   const findByEntriesId = await Entries.findByPk(EntriesId);
@@ -79,9 +82,10 @@ app.put("/users/:userid/entries/:entriesid", authenticate, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 app.delete(
   "/users/:userid/entries/:entriesid",
-  authenticate,
+  verifyToken,
   async (req, res) => {
     const EntriesId = req.params.entriesid;
     const entriesToDelete = await Entries.findByPk(EntriesId);
