@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import UserDetailForm from "./UserDetailForm";
 import { ReactComponent as Messy } from "../svg/Messy.svg";
-
+import { ReactComponent as Go } from "../svg/Go.svg";
+import { Link } from "react-router-dom";
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,9 @@ const Signup = () => {
       body: JSON.stringify({ username, password }),
     };
     const response = await fetch("/users", requestOption);
-    if (!response.ok) {
+    if (response.ok) {
+      console.log("working ");
+    } else {
       console.log("err");
     }
   }
@@ -30,6 +33,9 @@ const Signup = () => {
         setPassword={setPassword}
         goto="/login"
       />
+      <Link to={"/login"}>
+        <Go />
+      </Link>
       <Messy />
     </div>
   );

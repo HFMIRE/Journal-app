@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 
-// middleware function for authentication
-function authenticate(req, res, next) {
+// // middleware function for authentication
+function verifyToken(req, res, next) {
   // get the token that JWT generates to verify this is the correct user and return that user in the post blog request
   const authenticatedToken = req.headers.authorization.split(" ")[1];
-  console.log(authenticatedToken);
-  if (authenticatedToken === null) return res.sendStatus(401); // if null or undefined, return a 401 error
+  // console.log(authenticatedToken);
+  // console.log(authenticatedToken + " is working");
+  // if (authenticatedToken === null) return res.sendStatus(401); // if null or undefined, return a 401 error
   // at this point we know we have a valid token, so we need to verify it
   try {
     const payLoad = jwt.verify(authenticatedToken, process.env.JWT_SECRET);
@@ -15,5 +16,22 @@ function authenticate(req, res, next) {
     return res.sendStatus(403);
   }
 }
+// function verifyToken(req, res, next) {
+//   const authHeader = req.headers.authorization;
 
-module.exports = { authenticate };
+//   if (authHeader) {
+//     const token = authHeader.split(" ")[1]; // "Bearer kjhkf9s979fshjfa..."
+//     console.log(authHeader);
+//     jwt.verify(token, JWT_SECRET, (err, token) => {
+//       if (err) {
+//         return res.sendStatus(403);
+//       }
+//       req.userId = token.userId;
+//       next();
+//     });
+//   } else {
+//     res.sendStatus(401);
+//   }
+// }
+
+module.exports = { verifyToken };
