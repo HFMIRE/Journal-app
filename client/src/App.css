@@ -14,3 +14,15 @@ html {
   gap: 50px;
   justify-content: space-evenly;
 }
+
+.signup,
+.login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.zombieImg,
+.messyImg {
+  margin: 50px;
+  margin-top: 90px;
+}

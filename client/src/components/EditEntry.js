@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { ReactComponent as Go } from "../svg/Go.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { useHistory, useLocation } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -18,13 +18,14 @@ const EditEntry = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
+  let history = useHistory();
   let location = useLocation();
   const path = location.pathname.split("/")[2];
   console.log(path);
 
   const userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
+
   async function getSpeficEntriesData() {
     const requestOption = {
       method: "GET",
@@ -40,24 +41,14 @@ const EditEntry = () => {
     );
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setIsLoading(false);
       const nameData = data.name;
       const descriptionData = data.description;
-      console.log(nameData);
-      console.log(descriptionData);
       setNameRes(nameData);
       setDescriptionRes(descriptionData);
     } else {
       console.log("err");
     }
-  }
-  useEffect(() => {
-    getSpeficEntriesData();
-  });
-
-  if (isLoading) {
-    return <h1>Loading </h1>;
   }
   async function handleSubmit(e) {
     try {
@@ -71,10 +62,25 @@ const EditEntry = () => {
         body: JSON.stringify({ name, description }),
       };
       const userid = localStorage.getItem("userid");
-      await fetch(`/users/${userid}/entries/${path}`, requestOption);
+      const response = await fetch(
+        `/users/${userid}/entries/${path}`,
+        requestOption
+      );
+      if (response.ok) {
+        history.push("/getallentries");
+      } else {
+        console.log("err");
+      }
     } catch (err) {
       console.log(err);
     }
+  }
+  useEffect(() => {
+    getSpeficEntriesData();
+  });
+
+  if (isLoading) {
+    return <h1>Loading </h1>;
   }
   return (
     <div>
@@ -106,11 +112,8 @@ const EditEntry = () => {
             maxRows={24}
           />
         </div>
-        <button>Submit </button>
+        <Button type="submit">Submit </Button>
       </form>
-      <Link to={"/getallentries"}>
-        <Go />
-      </Link>
     </div>
   );
 };

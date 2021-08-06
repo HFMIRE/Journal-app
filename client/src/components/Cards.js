@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 
 const Cards = ({ name, description, index }) => {
   const classes = useStyles();
-  console.log(index);
   return (
     <div>
       <Card className={classes.root}>

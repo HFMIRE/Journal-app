@@ -12,6 +12,7 @@ app.use(cors());
 
 app.post("/users", async (req, res) => {
   const { username, password } = req.body;
+  console.log(username, username);
   const passwordHash = await bcyrpt.hash(password, 10);
   await User.create({ username, passwordHash });
   res.sendStatus(201);

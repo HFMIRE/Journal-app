@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
-import { Link, useLocation } from "react-router-dom";
-
+import { useHistory, useLocation, Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 const DeleteEntry = ({ name, description }) => {
   const [nameRes, setNameRes] = useState();
   const [descriptionRes, setDescriptionRes] = useState();
   const userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
+  let history = useHistory();
   let location = useLocation();
   const path = location.pathname.split("/")[2];
   console.log(path);
@@ -48,12 +49,14 @@ const DeleteEntry = ({ name, description }) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ path }),
     };
     const response = await fetch(
       `/users/${userid}/entries/${path}`,
       requestOption
     );
     if (response.ok) {
+      history.push("/getallentries");
       console.log("The delete fucntion works ");
     } else {
       console.log("err");
@@ -71,10 +74,10 @@ const DeleteEntry = ({ name, description }) => {
       <Typography variant="body1" color="textSecondary" component="p">
         Are you sure that you want to delete this entry?
       </Typography>
-      <button onClick={getDeleteData}>Delete </button>
       <Link to={"/getallentries"}>
-        <button>Go to All Entry </button>
+        <Button>Cancel </Button>
       </Link>
+      <Button onClick={getDeleteData}>Delete </Button>
     </div>
   );
 };
