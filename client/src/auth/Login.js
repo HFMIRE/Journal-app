@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import UserDetailForm from "./UserDetailForm";
 import { ReactComponent as Zombieing } from "../svg/Zombieing.svg";
-import { ReactComponent as Go } from "../svg/Go.svg";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory();
   async function handleSubmit(e) {
-    try {
+    if (username.length >= 4 || password >= 4) {
       e.preventDefault();
       const requestOption = {
         method: "POST",
@@ -20,16 +20,18 @@ const Login = () => {
       if (response.ok) {
         const { token, userid } = await response.json();
         localStorage.setItem("token", token);
-        console.log(token);
         localStorage.setItem("userid", userid);
-        console.log(userid);
+        history.push("/getallentries");
       }
-    } catch (err) {
-      console.log(err + "is a error");
+    } else {
+      console.log("Username & Password needs to be longer than 4 character");
     }
   }
   return (
-    <div>
+    <div className="login">
+      <div className="zombieImg">
+        <Zombieing />
+      </div>
       <UserDetailForm
         title="Login"
         handleSubmit={handleSubmit}
@@ -37,12 +39,7 @@ const Login = () => {
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        goto="/getallentries"
       />
-      <Link to={"/addentry"}>
-        <Go />
-      </Link>
-      <Zombieing />
     </div>
   );
 };

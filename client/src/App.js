@@ -1,27 +1,37 @@
 import "./App.css";
+import React from "react";
 import Navigation from "./components/Navigation";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
+import Logout from "./auth/Logout";
 import GetAllEntries from "./components/GetAllEntries";
 import AddEntry from "./components/AddEntry";
 import EditEntry from "./components/EditEntry";
 import DeleteEntry from "./components/DeleteEntry";
 import Security from "./components/Security";
+import PrivateRoute from "./components/PrivateRoute";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 function App() {
   return (
     <div className="App">
       <Router>
         <Navigation />
         <Switch>
-          <Route path="/getallentries" component={GetAllEntries} />
-          <Route path="/addentry" component={AddEntry} />
-          <Route path="/editentry" component={EditEntry} />
-          <Route path="/deleteentry" component={DeleteEntry} />
-          <Route path="/login" component={Login} />
-          <Route path="/security" component={Security} />
-          <Route path="/" component={Signup} />
+          {/* <Route path="/logout" component={Logout} /> */}
+          <Route restricted={true} component={Login} path="/login" exact />
+          <Route
+            restricted={false}
+            path="/security"
+            component={Security}
+            exact
+          />
+          <Route path="/" restricted={false} component={Signup} exact />
+          <Route restricted={true} component={Login} path="/login" exact />
+          <PrivateRoute path="/getallentries" component={GetAllEntries} />
+          <PrivateRoute path="/addentry" component={AddEntry} />
+          <PrivateRoute path="/editentry" component={EditEntry} />
+          <PrivateRoute path="/deleteentry" component={DeleteEntry} />
+          <PrivateRoute path="/logout" component={Logout} />
         </Switch>
       </Router>
     </div>

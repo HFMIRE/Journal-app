@@ -1,7 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards";
-import FeatureTab from "./FeatureTab";
+import { makeStyles } from "@material-ui/core/styles";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 const GetAllEntry = () => {
+  const classes = useStyles();
   const [entry, setEntry] = useState();
   const [isLoading, setIsLoading] = useState(true);
   async function getAllEntriesData() {
@@ -26,12 +41,18 @@ const GetAllEntry = () => {
   useEffect(() => {
     getAllEntriesData();
   }, [isLoading]);
-
+  console.log(entry);
   return (
     <div>
-      <FeatureTab />
+      <div className={classes.root}>
+        <Link to={"/addentry"}>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Link>
+      </div>
       {entry &&
-        entry.length > 0 &&
+        entry.length >= 0 &&
         entry.map((note, index) => {
           return (
             <Cards

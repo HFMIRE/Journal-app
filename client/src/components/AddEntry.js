@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { ReactComponent as Go } from "../svg/Go.svg";
-import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -15,6 +15,8 @@ const AddEntry = () => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  let history = useHistory();
+
   async function handleSubmit(e) {
     try {
       e.preventDefault();
@@ -28,7 +30,12 @@ const AddEntry = () => {
         body: JSON.stringify({ name, description }),
       };
       const userid = localStorage.getItem("userid");
-      await fetch(`/users/${userid}/entries`, requestOption);
+      const response = await fetch(`/users/${userid}/entries`, requestOption);
+      if (response.ok) {
+        history.push("/getallentries");
+      } else {
+        console.log("Post request failed ");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -66,11 +73,8 @@ const AddEntry = () => {
             maxRows={24}
           />
         </div>
-        <button>Submit </button>
+        <Button type="submit">Submit </Button>
       </form>
-      <Link to={"/getallentries"}>
-        <Go />
-      </Link>
     </div>
   );
 };
