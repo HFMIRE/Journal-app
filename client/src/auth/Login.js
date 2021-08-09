@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import UserDetailForm from "./UserDetailForm";
-import { ReactComponent as Zombieing } from "../svg/Zombieing.svg";
 import { useHistory } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
   async function handleSubmit(e) {
-    if (username.length >= 4 || password >= 4) {
+    if (username.length > 3 || password > 3) {
       e.preventDefault();
       const requestOption = {
         method: "POST",
@@ -29,9 +28,6 @@ const Login = () => {
   }
   return (
     <div className="login">
-      <div className="zombieImg">
-        <Zombieing />
-      </div>
       <UserDetailForm
         title="Login"
         handleSubmit={handleSubmit}

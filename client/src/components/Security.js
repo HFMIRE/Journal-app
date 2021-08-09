@@ -4,7 +4,8 @@ import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
-
+import { Link } from "react-router-dom";
+import { ReactComponent as Logo } from "../svg/Logo.svg";
 const Accordion = withStyles({
   root: {
     border: "1px solid rgba(0, 0, 0, .125)",
@@ -55,6 +56,11 @@ const Security = () => {
 
   return (
     <div>
+      <div className="logo">
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Logo />
+        </Link>
+      </div>
       <Accordion
         square
         expanded={expanded === "panel1"}

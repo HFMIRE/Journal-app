@@ -3,11 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router-dom";
+import LogoImg from "./LogoImg";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: 200,
+      width: 500,
     },
   },
 }));
@@ -21,7 +22,6 @@ const EditEntry = () => {
   let history = useHistory();
   let location = useLocation();
   const path = location.pathname.split("/")[2];
-  console.log(path);
 
   const userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -62,6 +62,7 @@ const EditEntry = () => {
         body: JSON.stringify({ name, description }),
       };
       const userid = localStorage.getItem("userid");
+
       const response = await fetch(
         `/users/${userid}/entries/${path}`,
         requestOption
@@ -84,36 +85,39 @@ const EditEntry = () => {
   }
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        className={classes.root}
-        noValidate
-        autoComplete="off"
-      >
-        <div>
-          <TextField
-            id="filled-multiline-flexible"
-            label="Title"
-            multiline
-            defaultValue={nameRes}
-            onChange={(e) => setName(e.target.value)}
-            minRows={1}
-            maxRows={5}
-          />
-        </div>
-        <div>
-          <TextField
-            id="filled-multiline-flexible"
-            label="Description"
-            multiline
-            defaultValue={descriptionRes}
-            onChange={(e) => setDescription(e.target.value)}
-            minRows={10}
-            maxRows={24}
-          />
-        </div>
-        <Button type="submit">Submit </Button>
-      </form>
+      <LogoImg />
+      <div>
+        <form
+          onSubmit={handleSubmit}
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              id="filled-multiline-flexible"
+              label="Title"
+              multiline
+              defaultValue={nameRes}
+              onChange={(e) => setName(e.target.value)}
+              minRows={1}
+              maxRows={5}
+            />
+          </div>
+          <div>
+            <TextField
+              id="filled-multiline-flexible"
+              label="Description"
+              multiline
+              defaultValue={descriptionRes}
+              onChange={(e) => setDescription(e.target.value)}
+              minRows={10}
+              maxRows={24}
+            />
+          </div>
+          <Button type="submit">Submit </Button>
+        </form>
+      </div>
     </div>
   );
 };

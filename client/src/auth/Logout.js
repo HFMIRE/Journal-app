@@ -13,7 +13,7 @@ const Logout = () => {
   return (
     <div>
       <h1>Are sure that you want to logout?</h1>
-      <Link to={"/getallentries"}>
+      <Link to={"/getallentries"} style={{ textDecoration: "none" }}>
         <Button> No</Button>
       </Link>
       <Button onClick={logout()}> Yes</Button>

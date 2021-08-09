@@ -16,22 +16,5 @@ function verifyToken(req, res, next) {
     return res.sendStatus(403);
   }
 }
-// function verifyToken(req, res, next) {
-//   const authHeader = req.headers.authorization;
-
-//   if (authHeader) {
-//     const token = authHeader.split(" ")[1]; // "Bearer kjhkf9s979fshjfa..."
-//     console.log(authHeader);
-//     jwt.verify(token, JWT_SECRET, (err, token) => {
-//       if (err) {
-//         return res.sendStatus(403);
-//       }
-//       req.userId = token.userId;
-//       next();
-//     });
-//   } else {
-//     res.sendStatus(401);
-//   }
-// }
 
 module.exports = { verifyToken };

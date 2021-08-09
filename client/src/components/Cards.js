@@ -8,14 +8,18 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 550,
+    marginTop: "50px",
   },
-});
+
+  marginTop: "60px",
+}));
 
 const Cards = ({ name, description, index }) => {
   const classes = useStyles();
+
   return (
     <div>
       <Card className={classes.root}>
@@ -30,12 +34,12 @@ const Cards = ({ name, description, index }) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Link to={`/editentry/${index}`}>
+          <Link to={`/editentry/${index}`} style={{ textDecoration: "none" }}>
             <Button size="small" color="primary">
               Edit
             </Button>
           </Link>
-          <Link to={`/deleteentry/${index}`}>
+          <Link to={`/deleteentry/${index}`} style={{ textDecoration: "none" }}>
             <Button size="small" color="primary">
               Delete
             </Button>
