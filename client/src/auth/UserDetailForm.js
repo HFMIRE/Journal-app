@@ -34,24 +34,16 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    width: "100px",
-    height: "100px",
+    width: "50px",
+    height: "50px",
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
-  sercuity: {
-    display: "flex",
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-    justifyContent: "flex-end",
-    fontWeight: 600,
-    padding: "30px",
   },
 }));
 
@@ -74,13 +66,7 @@ const UserDetailForm = ({
         </div>
         <Messy style={{ marginTop: "50px", padding: "20px" }} />
       </Grid>
-
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={3} square>
-        <Link to={"/security"} className={classes.sercuity}>
-          <Typography component="h1" variant="h4">
-            Security
-          </Typography>
-        </Link>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon color="primary" />

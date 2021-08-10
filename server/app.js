@@ -24,7 +24,7 @@ app.post("/login", async (req, res) => {
   res.status(200);
   if (verfiyUser) {
     const token = jwt.sign({ userid: userRecord.id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "2h",
     });
     return res.json({ token, userid: userRecord.id });
   } else {

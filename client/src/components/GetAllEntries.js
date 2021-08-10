@@ -12,6 +12,7 @@ const GetAllEntry = () => {
   const classes = useStyles();
   const [entry, setEntry] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
   async function getAllEntriesData() {
     const userid = localStorage.getItem("userid");
     const token = localStorage.getItem("token");
@@ -47,7 +48,7 @@ const GetAllEntry = () => {
                   index={note.id}
                   name={note.name}
                   description={note.description}
-                  entryData={entry}
+                  date={note.createdAt}
                 />
               </Grid>
             );

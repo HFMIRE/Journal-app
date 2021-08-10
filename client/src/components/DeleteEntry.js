@@ -3,7 +3,14 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import LogoImg from "./LogoImg";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: "200px",
+  },
+}));
 const DeleteEntry = ({ name, description }) => {
+  const classes = useStyles();
   const [nameRes, setNameRes] = useState();
   const userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -59,16 +66,18 @@ const DeleteEntry = ({ name, description }) => {
   return (
     <div>
       <LogoImg />
-      <Typography gutterBottom variant="h5" component="h2">
-        {nameRes}
-      </Typography>
-      <Typography variant="body1" color="textSecondary" component="p">
-        Are you sure that you want to delete this entry?
-      </Typography>
-      <Link to={"/getallentries"} style={{ textDecoration: "none" }}>
-        <Button>Cancel </Button>
-      </Link>
-      <Button onClick={getDeleteData}>Delete </Button>
+      <div className={classes.root}>
+        <Typography gutterBottom variant="h5" component="h2">
+          {nameRes}
+        </Typography>
+        <Typography variant="body1" color="textSecondary" component="p">
+          Are you sure that you want to delete this entry?
+        </Typography>
+        <Link to={"/getallentries"} style={{ textDecoration: "none" }}>
+          <Button>Cancel </Button>
+        </Link>
+        <Button onClick={getDeleteData}>Delete </Button>
+      </div>
     </div>
   );
 };

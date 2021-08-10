@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import LockIcon from "@material-ui/icons/Lock";
 import LogoImg from "./LogoImg";
 import DeleteIcon from "@material-ui/icons/Delete";
+import SecurityIcon from "@material-ui/icons/Security";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,9 +39,14 @@ export default function FeatureTab() {
             Delete User
           </Fab>
         </Link>
-
-        <Link to={"/logout"} style={{ textDecoration: "none" }}>
+        <Link to={"/security"} style={{ textDecoration: "none" }}>
           <Fab variant="extended" color="primary">
+            <SecurityIcon className={classes.extendedIcon} />
+            Security
+          </Fab>
+        </Link>
+        <Link to={"/logout"} style={{ textDecoration: "none" }}>
+          <Fab variant="extended" color="secondary">
             <LockIcon className={classes.extendedIcon} />
             Logout
           </Fab>

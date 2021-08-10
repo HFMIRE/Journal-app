@@ -33,6 +33,7 @@ const AddEntry = () => {
       const userid = localStorage.getItem("userid");
       const response = await fetch(`/users/${userid}/entries`, requestOption);
       if (response.ok) {
+        console.log("data");
         history.push("/getallentries");
       } else {
         console.log("Post request failed ");

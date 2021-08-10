@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-
+import Moment from "react-moment";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 550,
@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
   marginTop: "60px",
 }));
 
-const Cards = ({ name, description, index }) => {
+const Cards = ({ name, description, index, date }) => {
   const classes = useStyles();
-
   return (
     <div>
       <Card className={classes.root}>
@@ -30,6 +29,9 @@ const Cards = ({ name, description, index }) => {
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
               {description}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              <Moment format="DD-MM-YYYY HH:mm">{date}</Moment>
             </Typography>
           </CardContent>
         </CardActionArea>

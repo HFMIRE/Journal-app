@@ -1,6 +1,5 @@
 import "./App.css";
 import React from "react";
-// import Navigation from "./components/Navigation";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Logout from "./auth/Logout";
@@ -17,9 +16,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {/* <Navigation /> */}
         <Switch>
-          {/* <Route path="/logout" component={Logout} /> */}
           <Route restricted={true} component={Login} path="/login" exact />
           <Route
             restricted={false}

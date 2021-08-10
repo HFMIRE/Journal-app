@@ -1,118 +1,86 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import MuiAccordion from "@material-ui/core/Accordion";
-import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
-import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../svg/Logo.svg";
-const Accordion = withStyles({
-  root: {
-    border: "1px solid rgba(0, 0, 0, .125)",
-    boxShadow: "none",
-    "&:not(:last-child)": {
-      borderBottom: 0,
-    },
-    "&:before": {
-      display: "none",
-    },
-    "&$expanded": {
-      margin: "auto",
-    },
-  },
-  expanded: {},
-})(MuiAccordion);
+import { ReactComponent as Question } from "../svg/Question.svg";
+import { Button, Typography } from "@material-ui/core";
 
-const AccordionSummary = withStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "rgba(0, 0, 0, .03)",
-    borderBottom: "1px solid rgba(0, 0, 0, .125)",
-    marginBottom: -1,
-    minHeight: 56,
-    "&$expanded": {
-      minHeight: 56,
-    },
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
   },
-  content: {
-    "&$expanded": {
-      margin: "12px 0",
-    },
+  image: {
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    marginTop: "50px",
   },
-  expanded: {},
-})(MuiAccordionSummary);
-
-const AccordionDetails = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
+  paper: {
+    margin: theme.spacing(10, 12),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: "100px",
+    gap: "20px",
+    maxWidth: " 800px",
   },
-}))(MuiAccordionDetails);
-
+}));
 const Security = () => {
-  const [expanded, setExpanded] = React.useState("panel1");
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
+  const classes = useStyles();
   return (
-    <div>
+    <>
       <div className="logo">
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <Logo />
         </Link>
       </div>
-      <Accordion
-        square
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Collapsible Group Item #1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
+
+      <div className={classes.root}>
+        <div className={classes.image}>
+          <Question />
+        </div>
+        <div className={classes.paper}>
+          <Typography variant="h4" component="h2">
+            What Security does Vent have in place?
           </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        square
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Collapsible Group Item #2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
+          <Typography variant="subtitle1" gutterBottom>
+            By using proven technology, like Bcrypt and JWT Token, we can make
+            sure that security is top priority of Vent.
           </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        square
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
-      >
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Collapsible Group Item #3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
+          <Typography variant="h4" component="h2">
+            How does Vent secure your password?
           </Typography>
-        </AccordionDetails>
-      </Accordion>
-    </div>
+          <Typography variant="subtitle1" gutterBottom>
+            The password is secured by using a plugin called Bcrypt which hash
+            your password by turning it into a unrecogisable characters. This
+            insures that every user gets a different password regardless. Also,
+            it helps us protect your password incase of a sercurity
+            vulnerability.
+          </Typography>
+          <Typography variant="h4" component="h2">
+            How do we make sure you are correct user?
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            The system that we to authorise your access to the vent dashboard is
+            by using a JWT Token which expire after it use. For every tool that
+            we have ensure that we verify the user trying to access it. With the
+            JWT work is that Vent verify by using the a secret in combination
+            with the request, if it doesnt match, you are logout.
+          </Typography>
+          <Link
+            to={"/getallentries"}
+            style={{ textDecoration: "none", color: "#399375" }}
+          >
+            <Button>Go Back</Button>
+          </Link>
+        </div>
+      </div>
+    </>
   );
 };
 export default Security;
