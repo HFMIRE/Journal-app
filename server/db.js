@@ -1,9 +1,13 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const path = require("path");
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: path.join(__dirname, "db.sqlite"),
-});
+if (process.env.NODE_ENV === "development") {
+  const sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: path.join(__dirname, "db.sqlite"),
+  });
+} else {
+  const sequelize = new Sequelize(process.env.DATABASE_URL);
+}
 class User extends Model {}
 User.init(
   {
