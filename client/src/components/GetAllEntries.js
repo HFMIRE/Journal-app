@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
-
+import FeatureTab from "./FeatureTab";
+import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-  extendedIcon: {
-    marginRight: theme.spacing(1),
+    backgroundColor: theme.palette.primary.light,
   },
 }));
 const GetAllEntry = () => {
   const classes = useStyles();
   const [entry, setEntry] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
   async function getAllEntriesData() {
     const userid = localStorage.getItem("userid");
     const token = localStorage.getItem("token");
@@ -41,30 +35,25 @@ const GetAllEntry = () => {
   useEffect(() => {
     getAllEntriesData();
   }, [isLoading]);
-  console.log(entry);
   return (
-    <div>
-      <div className={classes.root}>
-        <Link to={"/addentry"}>
-          <Fab color="primary" aria-label="add">
-            <AddIcon />
-          </Fab>
-        </Link>
-      </div>
-      {entry &&
-        entry.length >= 0 &&
-        entry.map((note, index) => {
-          return (
-            <Cards
-              key={index}
-              index={note.id}
-              name={note.name}
-              description={note.description}
-            />
-          );
-        })}
-
-      <Cards entryData={entry} />
+    <div className={classes.root}>
+      <FeatureTab />
+      <Grid container>
+        {entry &&
+          entry.length >= 0 &&
+          entry.map((note, index) => {
+            return (
+              <Grid item key={index} xs={12} md={6} lg={4}>
+                <Cards
+                  index={note.id}
+                  name={note.name}
+                  description={note.description}
+                  date={note.createdAt}
+                />
+              </Grid>
+            );
+          })}
+      </Grid>
     </div>
   );
 };

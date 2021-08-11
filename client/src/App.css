@@ -9,20 +9,13 @@ html {
   justify-content: space-between;
   padding: 20px;
 }
-.navbar-left {
+.makeStyles-root-6 {
   display: flex;
   gap: 50px;
-  justify-content: space-evenly;
+  justify-content: left;
 }
-
-.signup,
-.login {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.zombieImg,
-.messyImg {
-  margin: 50px;
-  margin-top: 90px;
+.logo {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
