@@ -15,7 +15,10 @@ const Signup = () => {
         },
         body: JSON.stringify({ username, password }),
       };
-      const response = await fetch("/users", requestOption);
+      const response = await fetch(
+        process.env.API_DOMAIN + "/users",
+        requestOption
+      );
       if (response.ok) {
         history.push("/login");
       } else {
