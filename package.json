@@ -4,8 +4,8 @@
   "description": "Document API's   CRUD API   LOGIN API",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js",
     "server": "nodemon index.js --ignore client",
     "test": "jest --runInBand --detectOpenHandles --verbose"
   },
