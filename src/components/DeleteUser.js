@@ -28,7 +28,7 @@ const DeleteUser = () => {
     if (response.ok) {
       localStorage.removeItem("userid");
       localStorage.removeItem("token");
-      history.push("/");
+      history.push("/login");
     } else {
       console.log("err");
     }
